@@ -21,15 +21,21 @@ export class WelcomeModal extends Component {
   }
 
   handleSubmit = e => {
+    
     const { firstName, lastName, feeling } = this.state;
-    e.preventDefault();
-    this.props.createUser({
-      id: Date.now(),
-      firstName,
-      lastName,
-      feeling,
-    });
-    this.connectToChatBot();
+    if (firstName.length < 1 || lastName.length < 1 || feeling.length < 1) {
+      e.preventDefault();
+      this.setState({error: 'Please fill out ALL the input forms'})
+    } else {
+      e.preventDefault();
+      this.props.createUser({
+        id: Date.now(),
+        firstName,
+        lastName,
+        feeling,
+      });
+      this.connectToChatBot();
+    }
   }
 
   connectToChatBot = async () => {
