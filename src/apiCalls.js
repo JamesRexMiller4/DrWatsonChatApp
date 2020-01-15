@@ -19,7 +19,21 @@ export const startConversation = async feeling => {
 }
 
 export const postMessage = async newMessage => {
-
+  const url = 'https://drwatson-api.herokuapp.com/api/message'
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ newMessage })
+  };
+  const response = await fetch(url, options)
+  if(!response.ok) {
+    throw Error('You messed with the wrong Doctor')
+  }
+  const data = await response.json();
+  console.log(data)
+  return data;
 }
 
 export const endConversation = async () => {

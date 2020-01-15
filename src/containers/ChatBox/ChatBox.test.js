@@ -25,6 +25,7 @@ describe('ChatBox component', () => {
     wrapper = shallow(<ChatBox
       messages={mockMessages}
       hasErrored={mockHasErrored}
+      // addMessage={jest.fn()}
     />);
   });
 
@@ -53,7 +54,7 @@ describe('ChatBox component', () => {
     expect(wrapper.state('message')).toEqual('Hello world');
   });
 
-  it('should call messageChatBot, and clear state when calling handleSubmit pressing Enter', () => {
+  it('should call messageChatBot, and clear state when calling handleSubmit pressing Enter', async () => {
     wrapper = mount(<ChatBox
       addMessage={mockAddMessage}
       messages={mockMessages}
@@ -61,23 +62,23 @@ describe('ChatBox component', () => {
     />);
     wrapper.instance().messageChatBot = jest.fn();
 
-    wrapper.setState({ message: 'Hello world' });
-    wrapper.instance().handleSubmit({ key: 'Enter' });
+    await wrapper.setState({ message: 'Hello world' });
+    await wrapper.instance().handleSubmit({ key: 'Enter' });
 
     expect(wrapper.state('message')).toEqual('');
     expect(wrapper.instance().messageChatBot).toHaveBeenCalled();
   });
 
-  it('should call addMessage, messageChatBot, and clear state when calling handleSubmit clicking the button', () => {
+  it('should call addMessage, messageChatBot, and clear state when calling handleSubmit clicking the button', async () => {
     wrapper = mount(<ChatBox
       addMessage={mockAddMessage}
       messages={mockMessages}
       hasErrored={mockHasErrored}
     />);
     wrapper.instance().messageChatBot = jest.fn();
-
-    wrapper.setState({ message: 'Hello world' });
+    await wrapper.setState({ message: 'Hello world' });
     wrapper.instance().handleSubmit({ button: 0 });
+    await Promise.resolve();
 
     expect(wrapper.state('message')).toEqual('');
     expect(wrapper.instance().messageChatBot).toHaveBeenCalled();
@@ -133,7 +134,11 @@ describe('mapStateToProps', () => {
       errorMsg: ''
     };
     const expected = {
-      errorMsg: ''
+      errorMsg: '',
+      messages: [{
+        message: 'Hi there, my name is Dr. Watson. I understand that you have been feeling happy. That is super exciting to hear!',
+        isUser: false,
+      }]
     };
     const mappedProps = mapStateToProps(mockState);
 
