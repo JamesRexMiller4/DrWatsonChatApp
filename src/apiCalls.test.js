@@ -90,4 +90,66 @@ describe('endConversation', () => {
 
     expect(endConversation()).rejects.toEqual(Error('fetch failed.'));
   });
+  describe('postMessage', () => {
+    beforeEach(() => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.resolve({
+          ok: true
+        });
+      });
+    });
+
+    it('should fetch with the correct parameters', () => {
+      const newMessage = {message: 'Thatsa lotta GRAVY'}
+      const url = 'https://drwatson-api.herokuapp.com/api/message'
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ newMessage })
+      };
+      const expected = [url, options]
+
+      postMessage(newMessage)
+
+      expect(window.fetch).toHaveBeenCalledWith(...expected)
+    })
+    it('should return a new message', () => {
+      const newMessage = {message: 'Thatsa lotta GRAVY'}
+      const mockNewResponse = {message: 'Who let you into my office, SECURITY!'}
+
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockNewResponse)
+        });
+      });
+
+      const result = postMessage(newMessage)
+      const expected = mockNewResponse
+
+      expect(result).resolves.toEqual(expected)
+    })
+
+    it('SAD: should throw an error if the response is not ok', () => {
+      const newMessage = {message: 'Thatsa lotta GRAVY'}
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.resolve({
+          ok: false
+        });
+      });
+      
+      expect(postMessage(newMessage)).rejects.toEqual(Error('You messed with the wrong Doctor'))
+    })
+
+  it('SAD: should throw an error if the promise does not resolve', () => {
+    const newMessage = {message: 'Thatsa lotta GRAVY'}
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.reject(Error('fetch failed.'));
+      });
+
+      expect(postMessage(newMessage)).rejects.toEqual(Error('fetch failed.'))
+    })
+  })
 });
