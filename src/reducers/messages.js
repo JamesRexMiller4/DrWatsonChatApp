@@ -5,7 +5,6 @@ export const messages = (state= [], action) => {
     case 'CLEAR_MESSAGE':
       return []
     default:
-      break;
+      return state
   }
-
-// message, isUser
+}
