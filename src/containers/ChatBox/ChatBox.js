@@ -1,6 +1,5 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { hasErrored, addMessage } from '../../actions';
 import { postMessage } from '../../apiCalls';
 import Message from '../../components/Message/Message'

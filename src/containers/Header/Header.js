@@ -11,7 +11,6 @@ export class Header extends Component {
       await endConversation();
       this.props.removeUser();
       this.props.clearMessages();
-      console.log('Working')
     } catch({ message }) {
       this.props.hasErrored(message);
     }
