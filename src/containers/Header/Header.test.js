@@ -12,10 +12,12 @@ describe('Header component', () => {
       lastName: "Rollins", 
       feeling: "tired"
     };
-    wrapper = shallow(<Header user={mockUser} signOut={mockSignOut} />) 
+    wrapper = shallow(<Header user={mockUser} />) 
+    wrapper.instance().signOut = jest.fn()
   })
   it('should match the snapshot displaying a logout button if there is a user', () => {
     expect(wrapper).toMatchSnapshot()
+
   });
 
   it('should match the snapshot with just the title if there is no user', () => {
@@ -24,9 +26,16 @@ describe('Header component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should call the signOut function when a user clicks on the button', () => {
+  it('should call the signOut function when a user clicks on the button', async () => {
+    const apiCalls = require('../../apiCalls')
+
+    const endConvoSpy = jest.spyOn(apiCalls, 'endConversation');
+    endConvoSpy.mockResolvedValue()
+
     wrapper.find('button').simulate('click');
-    expect(mockSignOut).toHaveBeenCalled();
+    await Promise.resolve()
+
+    expect(endConvoSpy).toHaveBeenCalled();
   })
 });
 

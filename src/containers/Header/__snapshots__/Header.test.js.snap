@@ -6,7 +6,7 @@ exports[`Header component should match the snapshot displaying a logout button i
     Dr. Watson
   </h1>
   <button
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Sign Out
   </button>
