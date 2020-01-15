@@ -82,10 +82,6 @@ export class WelcomeModal extends Component {
   }
 }
 
-// export const mapStateToProps = state => ({
-
-// })
-
 export const mapDispatchToProps = dispatch => bindActionCreators({ createUser, hasErrored, addMessage }, dispatch)
 
 export default connect(null, mapDispatchToProps)(WelcomeModal);

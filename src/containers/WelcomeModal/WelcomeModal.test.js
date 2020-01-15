@@ -86,7 +86,7 @@ describe('WelcomeModal component', () => {
     await wrapper.instance().connectToChatBot();
 
     expect(startConversation).toHaveBeenCalledWith('happy');
-    expect(mockAddMessage).toHaveBeenCalledWith(mockMessage.message, false);
+    expect(mockAddMessage).toHaveBeenCalledWith(mockMessage.message);
   });
 
   it('should call hasErrored with correct arguments if connectToChatBot rejects', async () => {
