@@ -8,34 +8,18 @@ import { removeUser, hasErrored, clearMessages } from '../../actions';
 import { endConversation } from '../../apiCalls';
 import './App.css';
 
-class App extends Component {
-
-  // signOut = async () => {
-  //   try {
-  //     await endConversation();
-  //     this.props.removeUser();
-  //     this.props.clearMessages();
-  //   } catch({ message }) {
-  //     this.props.hasErrored(message);
-  //   }
-  // }
-
-  render() {
-    const { user } = this.props;
-    return (
-      <div className="App">
-        <Header signOut={this.signOut}/>
-        {!user && <WelcomeModal  />}
-        {user && <ChatBox />}
-      </div>
-    );
-  }
+export const App = ({user}) =>  {
+  return (
+    <div className="App">
+      <Header />
+      {!user && <WelcomeModal  />}
+      {user && <ChatBox />}
+    </div>
+  );
 }
 
 export const mapStateToProps = ({ user }) => ({
   user,
 });
-
-// export const mapDispatchToProps = dispatch =>  bindActionCreators({ removeUser, hasErrored }, dispatch);
 
 export default connect(mapStateToProps)(App);
