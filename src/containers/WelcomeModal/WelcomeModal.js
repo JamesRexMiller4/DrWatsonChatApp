@@ -41,8 +41,6 @@ export class WelcomeModal extends Component {
   connectToChatBot = async () => {
     try {
       const firstMessage = await startConversation(this.state.feeling);
-      console.log(firstMessage)
-      console.log(this.props.addMessage)
       this.props.addMessage(firstMessage.message);
     } catch({ message }) {
       this.props.hasErrored(message);
@@ -84,10 +82,10 @@ export class WelcomeModal extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
-  addMessage: state.addMessage
-})
+// export const mapStateToProps = state => ({
+
+// })
 
 export const mapDispatchToProps = dispatch => bindActionCreators({ createUser, hasErrored, addMessage }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(WelcomeModal);
+export default connect(null, mapDispatchToProps)(WelcomeModal);
